@@ -1,7 +1,7 @@
 'use strict'
 
 function getRepos() {
-    const searchHandle = $("js-search-handle").val();
+    const searchHandle = $("#js-search-handle").val();
     console.log(searchHandle);
     fetch('https://api.github.com/users/' + searchHandle + '/repos')
     .then(response => response.json())
