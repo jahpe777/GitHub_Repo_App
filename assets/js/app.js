@@ -4,33 +4,26 @@ function getRepos() {
     const searchHandle = $("js-search-handle").val();
     console.log(searchHandle);
     fetch('https://api.github.com/users/' + searchHandle + '/repos')
-    .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error(response.statusText);
-      })
-      .then(responseJson => displayResults(responseJson))
-      .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`);
-      });
-}
+    .then(response => response.json())
+    .then(responseJson => displayResults(responseJson))
+    .catch(error => alert('Something went wrong. Try again.'));
+};
 
 function displayResults(responseJson) {
     console.log(responseJson);
-    if (responseJson.message == 'not found') {
+    if (responseJson.message == 'Not Found') {
         alert('Cannot find handle');
     }
     else (makeList(responseJson));
-    $('#results').removeClass('hidden')
+    $('.results').removeClass('hidden')
 }
 
 function makeList(responseJson) {
-    $('#results-list').empty();
+    $('#js-results-list').empty();
     for (let i = 0; i < responseJson.length; i++) {
-        $('.results-list').append(
+        $('#js-results-list').append(
             `<li><h3>${responseJson[i].name}</h3>
-            <h3><a href="${responseJson[i].url}">${responseJson[i].html_url}</a></h3>
+            <h3><a href="${responseJson[i].html_url}">${responseJson[i].html_url}</a></h3>
             </li>`
     )};
 }
